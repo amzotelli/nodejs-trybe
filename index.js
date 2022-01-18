@@ -8,6 +8,7 @@ const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
 const talker = require('./getTalker');
+const talkerId = require('./getTalkerId');
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
@@ -19,3 +20,5 @@ app.listen(PORT, () => {
 });
 
 app.get('/talker', talker);
+
+app.get('/talker/:id', talkerId);
