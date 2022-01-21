@@ -1,5 +1,3 @@
-const token = '7mqaVRXJSp886CGr';
-
 const verifyEmail = (req, res, next) => {
   const { email } = req.body;
   const regexEmail = /\S+@\S+\.\S+/; 
@@ -12,7 +10,7 @@ const verifyEmail = (req, res, next) => {
   next();
 };
 
-const verifyPassword = (req, res) => {
+const verifyPassword = (req, res, next) => {
   const { password } = req.body;
   if (!password) {
     return res.status(400).send({ message: 'O campo "password" é obrigatório' });
@@ -22,10 +20,14 @@ const verifyPassword = (req, res) => {
       message: 'O "password" deve ter pelo menos 6 caracteres',
     });
   }
-  res.status(200).json({ token });
+  next();
 };
 
+const tokenLogin = (_req, res) => {
+  res.status(200).json({ token: '7mqaVRXJSp886CGr' });
+};
 module.exports = {
   verifyEmail,
   verifyPassword,
+  tokenLogin,
 };
