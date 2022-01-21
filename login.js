@@ -13,12 +13,10 @@ const verifyEmail = (req, res, next) => {
 const verifyPassword = (req, res, next) => {
   const { password } = req.body;
   if (!password) {
-    return res.status(400).send({ message: 'O campo "password" é obrigatório' });
+    return res.status(400).json({ message: 'O campo "password" é obrigatório' });
   }
   if (password.length < 6) {
-    return res.status(400).send({
-      message: 'O "password" deve ter pelo menos 6 caracteres',
-    });
+    return res.status(400).json({ message: 'O "password" deve ter pelo menos 6 caracteres' });
   }
   next();
 };
@@ -26,6 +24,7 @@ const verifyPassword = (req, res, next) => {
 const tokenLogin = (_req, res) => {
   res.status(200).json({ token: '7mqaVRXJSp886CGr' });
 };
+
 module.exports = {
   verifyEmail,
   verifyPassword,
