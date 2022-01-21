@@ -23,9 +23,7 @@ const verifyPassword = (req, res, next) => {
   next();
 };
 
-const tokenLogin = (_req, res) => {
-  res.status(200).json({ token: '7mqaVRXJSp886CGr' });
-};
+const tokenLogin = (_req, res) => res.status(200).json({ token: '7mqaVRXJSp886CGr' });
 
 module.exports = {
   verifyEmail,
