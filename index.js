@@ -9,7 +9,7 @@ const PORT = '3000';
 
 const talker = require('./getTalker');
 const talkerId = require('./getTalkerId');
-// const { verifyEmail, verifyPassword, tokenLogin } = require('./login');
+const { verifyEmail, verifyPassword } = require('./login');
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
@@ -20,7 +20,9 @@ app.get('/talker', talker);
 
 app.get('/talker/:id', talkerId);
 
-// app.post('/login', verifyEmail, verifyPassword, tokenLogin);
+app.post('/login', verifyEmail, verifyPassword);
+
+app.use(verifyEmail, verifyPassword);
 
 app.listen(PORT, () => {
   console.log('Online');
