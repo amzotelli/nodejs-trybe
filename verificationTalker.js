@@ -1,5 +1,3 @@
-const fs = require('fs').promises;
-
 // first verification 
 const verifyToken = (req, res, next) => {
   const { authorization } = req.headers;
@@ -54,29 +52,13 @@ const verifySeen = (req, res, next) => {
 // sixth verification
 const verifyTalk = (req, res, next) => {
   const { talk } = req.body;
-  if (!talk || !talk.watchedAt || !talk.rate) {
+  if (!talk || !talk.watchedAt || talk.rate === undefined) {
     return res.status(400).json(
       { message: 'O campo "talk" é obrigatório e "watchedAt" e "rate" não podem ser vazios' },
     );
   }
 
   next();
-};
-
-// adding new talker 
-const addNewTalker = async (req, res) => {
-  const { name, age, talk } = req.body;
-  const response = await fs.readFile('./talker.json', 'utf8');
-  const talker = JSON.parse(response);
-  const newTalker = {
-    id: talker.length + 1,
-    name,
-    age,
-    talk,
-  };
-  talker.push(newTalker);
-  await fs.writeFile('./talker.json', JSON.stringify(talker));
-  res.status(201).json(newTalker);
 };
 
 module.exports = {
@@ -86,5 +68,4 @@ module.exports = {
   verifyTalk,
   verifySeen,
   verifyRate,
-  addNewTalker,
 };

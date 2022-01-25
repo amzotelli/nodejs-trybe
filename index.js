@@ -18,8 +18,10 @@ const {
   verifyTalk,
   verifySeen,
   verifyRate,
-  addNewTalker,
-} = require('./talker');
+} = require('./verificationTalker');
+
+const { addNewTalker } = require('./addNewTalker');
+const { editTalker } = require('./editTalker');
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
@@ -34,6 +36,9 @@ app.post('/login', verifyEmail, verifyPassword, tokenLogin);
 
 app.post('/talker',
   verifyToken, verifyName, verifyAge, verifyTalk, verifySeen, verifyRate, addNewTalker);
+
+app.put('/talker/:id',
+  verifyToken, verifyName, verifyAge, verifyTalk, verifySeen, verifyRate, editTalker);
 
 app.listen(PORT, () => {
   console.log('Online');
