@@ -10,7 +10,9 @@ const PORT = '3000';
 const talker = require('./getTalker');
 const talkerId = require('./getTalkerId');
 const { verifyEmail, verifyPassword, tokenLogin } = require('./login');
-
+const { addNewTalker } = require('./addNewTalker');
+const { editTalker } = require('./editTalker');
+const { deleteTalker } = require('./deleteTalker');
 const { 
   verifyToken,
   verifyName,
@@ -19,9 +21,6 @@ const {
   verifySeen,
   verifyRate,
 } = require('./verificationTalker');
-
-const { addNewTalker } = require('./addNewTalker');
-const { editTalker } = require('./editTalker');
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
@@ -39,6 +38,8 @@ app.post('/talker',
 
 app.put('/talker/:id',
   verifyToken, verifyName, verifyAge, verifyTalk, verifySeen, verifyRate, editTalker);
+
+app.delete('/talker/:id', verifyToken, deleteTalker);
 
 app.listen(PORT, () => {
   console.log('Online');
