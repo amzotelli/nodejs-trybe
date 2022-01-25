@@ -5,7 +5,6 @@ const verifyToken = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) return res.status(401).json({ message: 'Token não encontrado' });
   if (authorization.length !== 16) return res.status(401).json({ message: 'Token inválido' });
-
   next();
 };
 
@@ -34,7 +33,7 @@ const verifyAge = (req, res, next) => {
 // fourth verification
 const verifyRate = (req, res, next) => {
 const { talk: { rate } } = req.body;
-if (typeof rate !== 'number' || rate < 1 || rate > 5) {
+if (rate < 1 || rate > 5) {
 return res.status(400).json({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
 }
 
@@ -42,10 +41,10 @@ next();
 };
 // fifth verification
 const verifySeen = (req, res, next) => {
-  const verifyDate = (date) => String(date)
-    .match(/^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/);
   const { talk: { watchedAt } } = req.body;
-  if (!verifyDate(watchedAt)) {
+  const testDate = /^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/;
+  const verifyDate = testDate.test(watchedAt);
+  if (!verifyDate) {
     return res.status(400).json({ message: 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"' });
   }
 
@@ -67,7 +66,7 @@ const verifyTalk = (req, res, next) => {
 // adding new talker 
 const addNewTalker = async (req, res) => {
   const { name, age, talk } = req.body;
-  const response = await fs.readFile('./talker.json');
+  const response = await fs.readFile('./talker.json', 'utf8');
   const talker = JSON.parse(response);
   const newTalker = {
     id: talker.length + 1,

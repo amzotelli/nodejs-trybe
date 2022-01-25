@@ -32,7 +32,7 @@ app.get('/talker/:id', talkerId);
 
 app.post('/login', verifyEmail, verifyPassword, tokenLogin);
 
-app.post('./talker',
+app.post('/talker',
   verifyToken, verifyName, verifyAge, verifyTalk, verifySeen, verifyRate, addNewTalker);
 
 app.listen(PORT, () => {
